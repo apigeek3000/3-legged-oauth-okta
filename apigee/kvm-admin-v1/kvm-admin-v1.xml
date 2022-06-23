@@ -1,0 +1,39 @@
+<APIProxy revision="1" name="kvm-admin-v1">
+    <DisplayName></DisplayName>
+    <Description>Administration API for KVM.</Description>
+    <CreatedAt>1655495362318</CreatedAt>
+    <LastModifiedAt>1655495362318</LastModifiedAt>
+    <BasePaths>/kvm-admin/v1</BasePaths>
+    <Policies>
+        <Policy>AM-IAMPermissionCheck</Policy>
+        <Policy>AM-OriginalRequest</Policy>
+        <Policy>AM-SetResponse</Policy>
+        <Policy>EV-AvailablePermissions</Policy>
+        <Policy>EV-ParseRequestBody</Policy>
+        <Policy>EV-ParseRequestFormBody</Policy>
+        <Policy>EV-PathParameters</Policy>
+        <Policy>JS-IAMPermission</Policy>
+        <Policy>KV-DeleteEntryEnv</Policy>
+        <Policy>KV-DeleteEntryOrg</Policy>
+        <Policy>KV-GetEntryEnv</Policy>
+        <Policy>KV-GetEntryOrg</Policy>
+        <Policy>KV-PostEntryEnv</Policy>
+        <Policy>KV-PostEntryOrg</Policy>
+        <Policy>RF-400</Policy>
+        <Policy>RF-401</Policy>
+        <Policy>RF-403</Policy>
+        <Policy>RF-404</Policy>
+        <Policy>RF-404Entry</Policy>
+        <Policy>RF-500</Policy>
+        <Policy>SA-Incoming</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>jsc://JS-IAMPermission.js</Resource>
+    </Resources>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+</APIProxy>
