@@ -46,7 +46,9 @@ the Okta OAuth identity facade proxies as given by Drevel don't work with the de
 1. Navigate to the identity facade proxy. Go the the develop tab.
 2. In the /authorize flow, we'll want to remove a couple of unneeded conditional steps. The steps to delete or comment out are as follows: RF-InvalidRequest-Redirect, RF-InvalidRequest-Redirect, RF-InvalidRequest-Redirect
 3. We'll also need to add a CORS policy for preflight requests. Add the OptionsPreFlight Flow from Apigee Documentation [here](https://docs.apigee.com/api-platform/develop/adding-cors-support-api-proxy#handlingcorspreflightrequests). This will also require you to create a new AssignMessage policy called "add-cors". You can replace the policy definition with what's in /apigee/identity-facade-v1/policies/add-cors.xml.
-4. Be sure to save and deploy your changes
+4. You'll also want to add a CORS policy on the response PostFlow. Reuse the Add CORS policy from step 3. See Apigee Documentation [here](https://docs.apigee.com/api-platform/develop/adding-cors-support-api-proxy#attachinganaddcorspolicytoanewapiproxy 
+5. Repeat steps 3 and 4 with you hello-world proxy
+6. Be sure to save and deploy all changes
 
 ### Test the portal
 
@@ -58,3 +60,6 @@ the Okta OAuth identity facade proxies as given by Drevel don't work with the de
 6. Test the hello-world API
 
 ## Client Application
+
+Update identiy facade to remove RF-InvalidRequest step in /authorize
+This might not have been necessary ^. I thinik I have to create a new app
