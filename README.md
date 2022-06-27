@@ -62,4 +62,4 @@ the Okta OAuth identity facade proxies as given by Drevel don't work with the de
 ## Client Application
 
 Update identiy facade to remove RF-InvalidRequest step in /authorize
-This might not have been necessary ^. I thinik I have to create a new app
+This might not have been necessary ^. I think I just had to create a new app that pointed to the identity facade product

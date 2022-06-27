@@ -5,7 +5,6 @@ app_secrets
 
 # dependencies
 node_modules
-index.js
 /.pnp
 .pnp.js
 

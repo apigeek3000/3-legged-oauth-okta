@@ -10,23 +10,27 @@ function App() {
     console.log('callAPI()');
 
     // Define important variables
-    const clientId = "xkey-1655495353";
     const scopes = "openid email profile"
-    const redirectUrl = "https://ps-northam-apigeex-demo-vccdevportal.apigee.io/oauth_redirect"; // What's in Apigee App Redirect
     const domain = "34.149.67.152.nip.io";
     const oauthProxyPath = "v1/oauth20";
     const targetProxyPath = "pschello";
 
-    // Get client secret
+    // Define these vars based on if we are live
+    let clientId = "";
     let clientSecret = "";
+    let redirectUrl = "";
+    
     // If local env
     // Else we are live
     if (process.env.NODE_ENV === "development") {
       // Get from app_secrets
       const clientVars = require("./app_secrets/clientVars.json");
+      clientId = clientVars.clientId;
       clientSecret = clientVars.clientSecret;
+      redirectUrl = clientVars.redirectUrl;
     } else {
-      // Get from a secure storage location. Perhaps Secrets Manager
+      // Get client data from a secure storage location. Perhaps Secrets Manager
+      // Set live oauth_redirect url
       // TODO
     }
 
@@ -35,13 +39,45 @@ function App() {
 
     // Intiate flow and redirect to Okta IDP
     const authUrl = `https://${domain}/${oauthProxyPath}/authorize?client_id=${clientId}&response_type=code&scope=${scopes}&redirect_uri=${redirectUrl}`;
-    alert(`authUrl: ${authUrl}`);
+    console.log(`authUrl: ${authUrl}`);
 
     // Open new window with authUrl
+    const authWindow = window.open(authUrl, "_blank")// to open new page
+    
+    // Every second check if we have the code
+    let authCode;
+    const windowInterval = setInterval(async function () {
+      // Get window url and see if we have redirected yet
+      const authWindowUrl = authWindow.document.URL;
+      if (authWindowUrl.startsWith(redirectUrl)) {
+        // Redirect complete, get URL, close window
+        const code = authWindowUrl.match(/\?code\=(.*)\&state=/).pop();
 
-    // It will eventually redirect to redirectUrl
+        if (code) {
+          // If redirect is complete and successful set code
+          authCode = code;
+        } else {
+          throw("Error getting auth code");
+        }
+      }
+
+      if (authCode) {
+        console.log(`authCode: ${authCode}`);
+        authWindow.close();
+        clearInterval(windowInterval);
+      }
+    }, 1000);
     } catch (err) {
       console.log(err);
+      alert('Error authenticating');
+    }
+  }
+
+  async function getAuthCode() {
+    try {
+
+    } catch(e) {
+
     }
   }
 
