@@ -1,0 +1,17 @@
+<APIProxy revision="2" name="hello-world">
+    <DisplayName>Hello World</DisplayName>
+    <Description>An example API proxy.</Description>
+    <CreatedAt>1656365488890</CreatedAt>
+    <LastModifiedAt>1656365488890</LastModifiedAt>
+    <BasePaths>/hello-world</BasePaths>
+    <Policies>
+        <Policy>OAuth-v20-1</Policy>
+        <Policy>add-cors</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+</APIProxy>

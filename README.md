@@ -46,9 +46,10 @@ the Okta OAuth identity facade proxies as given by Drevel don't work with the de
 1. Navigate to the identity facade proxy. Go the the develop tab.
 2. In the /authorize flow, we'll want to remove a couple of unneeded conditional steps. The steps to delete or comment out are as follows: RF-InvalidRequest-Redirect, RF-InvalidRequest-Redirect, RF-InvalidRequest-Redirect
 3. We'll also need to add a CORS policy for preflight requests. Add the OptionsPreFlight Flow from Apigee Documentation [here](https://docs.apigee.com/api-platform/develop/adding-cors-support-api-proxy#handlingcorspreflightrequests). This will also require you to create a new AssignMessage policy called "add-cors". You can replace the policy definition with what's in /apigee/identity-facade-v1/policies/add-cors.xml.
-4. You'll also want to add a CORS policy on the response PostFlow. Reuse the Add CORS policy from step 3. See Apigee Documentation [here](https://docs.apigee.com/api-platform/develop/adding-cors-support-api-proxy#attachinganaddcorspolicytoanewapiproxy 
+4. You'll also want to add a CORS policy on the response PostFlow. Reuse the Add CORS policy from step 3. See Apigee Documentation [here](https://docs.apigee.com/api-platform/develop/adding-cors-support-api-proxy#attachinganaddcorspolicytoanewapiproxy)
 5. Repeat steps 3 and 4 with you hello-world proxy
-6. Be sure to save and deploy all changes
+6. In the hello-world app also add OAuth-v20-1 preflight policy (default policy)
+7. Be sure to save and deploy all changes
 
 ### Test the portal
 
@@ -61,5 +62,34 @@ the Okta OAuth identity facade proxies as given by Drevel don't work with the de
 
 ## Client Application
 
-Update identiy facade to remove RF-InvalidRequest step in /authorize
-This might not have been necessary ^. I think I just had to create a new app that pointed to the identity facade product
+### Update Apigee
+
+The applicaition that we created for the developer portal uses a developer portal callback url. We need to create a new application with an updated callback url that matches our localhost client URL
+
+1. Go to Publish > Apps > Create New App
+2. Name it hello-world, give it a callback URL of http://localhost:3000/oauth_redirect, add credentials and select both Identity Facade and your Hello World products when you do so. Finally, create create.
+3. In the next page, copy the new created client id and secret from credentials. You will use these in future steps.
+
+### Local Client App Setup
+
+1. On your local machine, download the code within the /client folder of this repository. This is a simple Node.js React client application.
+2. In Home.js assign the domain variable the value of your Apigee domain
+3. In client/src create a new folder called app_secrets. Within it create a file called <code>clientVars.json</code>
+4. In <code>clientVars.json</code> create 3 json properties, clientId, clientSecret, and redirectUrl. Use the credentials and redirect_url from your newly created Apigee app.
+
+### Test Flow
+
+1. In command line, navigate the the folder's directory
+2. Run the command <code>npm i</code> to install dependencies
+3. Run the command <code>npm start</code> to start the local server
+4. Navigate to http://localhost:3000 to access the application
+5. Open up the browser console by pressing CTRL+i. Be sure to navigate to the console
+6. Click the Initiate button, go through the OAuth flow, and keep your eye on the logs in the browser console
+7. If everything went well, you should see an alert that says "Success!"
+
+![Client Success](assets/success.png)
+
+
+## What's Next?
+
+Lots of features could be implemented to improve this flow. For starters we should store the token somewhere once we have it so we don't have to grab a new one every time. Apigee caching features could also be used to improve latency and potentially store tokens as well. Also, we never deployed this application to the live internet. I'd recommend storing the app_secrets variables in a secure storage service like Google's Secrets Manager. The client application could be deployed on something like App Engine or Cloud Run with ease.

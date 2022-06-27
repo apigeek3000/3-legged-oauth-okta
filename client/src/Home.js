@@ -74,6 +74,16 @@ function App() {
       console.log(`protectedMessage: ${protectedMessage}`);
       const protectedEmail = protectedResp.data.response.user.email;
       console.log(`protectedEmail: ${protectedEmail}`);
+
+      // Use token to call hello world
+      const targetUrl =  `https://${domain}/${targetProxyPath}?apikey=${clientId}`;
+      const targetHeaders = {
+        'Authorization': `Bearer ${tokenCode}`
+      }
+      const targetResp = await Axios.get(targetUrl, {headers: targetHeaders});
+      console.log(`targetResp: ${JSON.stringify(targetResp)}`);
+
+      alert('Success!');
     } catch (err) {
       console.log(err);
       alert('Error authenticating');
@@ -128,7 +138,7 @@ function App() {
       <header className="App-header">
         <p> Edit <code>src/App.js</code> and save to reload.</p>
         <p> Click the button below to call an initate the OAuth2 flow and call your Apigee API </p>
-        <button type="button" onClick={(e) => {initiateFlow()}}>Engage</button>
+        <button type="button" onClick={(e) => {initiateFlow()}}>Initiate</button>
       </header>
     </div>
   );
