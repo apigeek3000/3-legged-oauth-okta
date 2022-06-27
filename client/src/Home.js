@@ -13,9 +13,9 @@ function App() {
 
       // Define important variables
       const scopes = "openid email profile"
-      const domain = "34.149.67.152.nip.io";
+      const domain = ""; // Update
       const oauthProxyPath = "v1/oauth20";
-      const targetProxyPath = "pschello";
+      const targetProxyPath = "hello-world";
 
       // Define these vars based on if we are live
       let clientId = "";
@@ -26,7 +26,7 @@ function App() {
       // Else we are live
       if (process.env.NODE_ENV === "development") {
         // Get from app_secrets
-        const clientVars = require("./app_secrets/clientVars.json");
+        const clientVars = require("./app_secrets/clientVars.json"); // Update
         clientId = clientVars.clientId;
         clientSecret = clientVars.clientSecret;
         redirectUrl = clientVars.redirectUrl;
