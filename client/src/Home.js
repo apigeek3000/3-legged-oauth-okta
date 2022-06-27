@@ -48,7 +48,23 @@ function App() {
       console.log(`authCode: ${authCode}`);
 
       // Use auth code, among other vars, to get the token now
+      const tokenUrl = `https://${domain}/${oauthProxyPath}/token?client_id=${clientId}`;
+      const tokenBody = new URLSearchParams({
+        redirect_uri: redirectUrl,
+        grant_type: 'authorization_code',
+        code: authCode
+      });
+      const tokenHeaders = {
+        'Content-Type': "application/x-www-form-urlencoded",
+        'Authorization': `Basic ${clientB64}`
+      }
+      const tokenResp = await Axios.post(tokenUrl, tokenBody, {headers: tokenHeaders});
+      console.log(`tokenResp: ${JSON.stringify(tokenResp)}`);
+      const tokenCode = tokenResp.data.access_token;
+      console.log(`tokenCode: ${tokenCode}`);
 
+      // Use token to call API
+      
     } catch (err) {
       console.log(err);
       alert('Error authenticating');
@@ -73,7 +89,7 @@ function App() {
         if (authWindowUrl.startsWith(redirectUrl)) {
           // Redirect complete, get URL, close 
           // Regex = get between ?code= and &state=
-          const code = authWindowUrl.match(/\?code\=(.*)\&state=/).pop();
+          const code = authWindowUrl.match(/\?code=(.*)&state=/).pop();
 
           if (code) {
             // If redirect is complete and successful set code
