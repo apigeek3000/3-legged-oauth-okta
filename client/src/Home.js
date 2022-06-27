@@ -63,8 +63,17 @@ function App() {
       const tokenCode = tokenResp.data.access_token;
       console.log(`tokenCode: ${tokenCode}`);
 
-      // Use token to call API
-      
+      // Use token to call protected API
+      const protectedUrl =  `https://${domain}/${oauthProxyPath}/protected`;
+      const protectedHeaders = {
+        'Authorization': `Bearer ${tokenCode}`
+      }
+      const protectedResp = await Axios.get(protectedUrl, {headers: protectedHeaders});
+      console.log(`protectedResp: ${JSON.stringify(protectedResp)}`);
+      const protectedMessage = protectedResp.data.response.message;
+      console.log(`protectedMessage: ${protectedMessage}`);
+      const protectedEmail = protectedResp.data.response.user.email;
+      console.log(`protectedEmail: ${protectedEmail}`);
     } catch (err) {
       console.log(err);
       alert('Error authenticating');
