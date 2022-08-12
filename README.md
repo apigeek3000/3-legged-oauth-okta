@@ -90,7 +90,7 @@ The Okta OAuth identity facade proxies as given by Drevel don't work with the de
 The applicaition that we created for the developer portal uses a developer portal callback url. We need to create a new application with an updated callback url that matches our localhost client URL
 
 1. Go to Publish > Apps > Create New App
-2. Name it hello-world, give it a callback URL of http://localhost:3000/oauth_redirect, add credentials and select both Identity Facade and your Hello World products when you do so. Finally, create create.
+2. Name it Hello World Web App, give it a callback URL of http://localhost:3000/oauth_redirect, add credentials and select both Identity Facade and your Hello World products when you do so. Finally, create create.
 3. In the next page, copy the new created client id and secret from credentials. You will use these in future steps.
 
 ### Local Client App Setup
@@ -98,11 +98,11 @@ The applicaition that we created for the developer portal uses a developer porta
 1. On your local machine, download the code within the /client folder of this repository. This is a simple Node.js React client application.
 2. In Home.js assign the domain variable the value of your Apigee domain
 3. In client/src create a new folder called app_secrets. Within it create a file called <code>clientVars.json</code>
-4. In <code>clientVars.json</code> create 3 json properties, clientId, clientSecret, and redirectUrl. Use the credentials and redirect_url from your newly created Apigee app.
+4. In <code>clientVars.json</code> create a json with 4 properties; domain, clientId, clientSecret, and redirectUrl. Use your Apigee api domain, newly created app key, secret, and redirect_url.
 
 ### Test Flow
 
-1. In command line, navigate the the folder's directory
+1. In command line, navigate the the client folder's directory
 2. Run the command <code>npm i</code> to install dependencies
 3. Run the command <code>npm start</code> to start the local server
 4. Navigate to http://localhost:3000 to access the application
