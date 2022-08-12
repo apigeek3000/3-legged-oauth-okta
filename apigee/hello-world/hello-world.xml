@@ -1,16 +1,20 @@
-<APIProxy revision="2" name="hello-world">
+<APIProxy revision="14" name="hello-world">
     <DisplayName>Hello World</DisplayName>
     <Description>An example API proxy.</Description>
-    <CreatedAt>1656365488890</CreatedAt>
-    <LastModifiedAt>1656365488890</LastModifiedAt>
+    <CreatedAt>1660335972224</CreatedAt>
+    <LastModifiedAt>1660336001411</LastModifiedAt>
     <BasePaths>/hello-world</BasePaths>
     <Policies>
         <Policy>OAuth-v20-1</Policy>
         <Policy>add-cors</Policy>
+        <Policy>authHeaderTransform</Policy>
     </Policies>
     <ProxyEndpoints>
         <ProxyEndpoint>default</ProxyEndpoint>
     </ProxyEndpoints>
+    <Resources>
+        <Resource>jsc://authHeaderTransform.js</Resource>
+    </Resources>
     <TargetEndpoints>
         <TargetEndpoint>default</TargetEndpoint>
     </TargetEndpoints>
